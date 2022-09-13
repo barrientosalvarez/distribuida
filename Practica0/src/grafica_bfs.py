@@ -1,5 +1,10 @@
 class Grafica:
-    """Clase que representa a una gráfica. Los id's de los nodos que
+    """
+    Clase modificada por:
+        Barrientos Alvarez Jorge Miguel Aaron
+        Martinez Pardo Esau
+
+    Clase que representa a una gráfica. Los id's de los nodos que
     pertenezcan a estas gráficas comenzarán desde 0.
     
     Atributos:
@@ -14,10 +19,12 @@ class Grafica:
         vecinos -- lista con los id's de los vecinos del nodo
         """
         def __init__(self, id, vecinos):
-            raise NotImplementedError('Constructor de Nodo no implementado')
+            self.id=id
+            self.vecinos=vecinos
 
         def __str__(self):
-            raise NotImplementedError('__str__ de Nodo no implementado')
+            nodo_str="{"+str(id)+", "+str(self.vecinos)+"}"
+            return nodo_str
 
     def __init__(self, adyacencias, nombre='sin nombre'):
         """Constructor de una gráfica.
@@ -54,7 +61,20 @@ class Grafica:
         el que su algoritmo recorrió la gráfica.
         NOTA: deben usar el nodo en self.nodes[0] como raíz de sus recorridos.
         """
-        raise NotImplementedError('BFS no implementado')
+
+        visitados=[0]
+        cola=[0]
+        bfs_str=""
+        while cola:
+            actual=cola.pop(0)
+            bfs_str+=str(actual)+","
+            for vecino in self.nodos[actual].vecinos:
+                if vecino not in visitados:
+                    visitados.append(vecino)
+                    cola.append(vecino)
+
+
+        return bfs_str[:-1]
 
 
 # ------------------ MAIN --------------------------
