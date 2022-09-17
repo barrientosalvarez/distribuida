@@ -69,7 +69,7 @@ class NodoArbolGenerador(Nodo):
 
         self.madre=-1
         self.hijas=[]
-        self.expected_msg=0
+        self.expected_msg=-1
         self.condition=True
 
     def genera_arbol(self, env: simpy.Environment):
@@ -103,7 +103,7 @@ class NodoArbolGenerador(Nodo):
 
             elif msg[0]=="BACK":
                 self.expected_msg-=1
-                if(not msg[1]):
+                if(not(not msg[1])):
                     if msg[2] not in self.hijas:
                         self.hijas.append(msg[2])
 
