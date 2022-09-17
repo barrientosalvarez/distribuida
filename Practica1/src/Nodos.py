@@ -3,6 +3,9 @@ import simpy
 
 class Nodo:
     """Representa un nodo basico.
+    Hecho por:
+    Barrientos Alvarez Jorge Miguel Aaron
+    Martinez Pardo Esau
 
     Atributos:
     id_nodo -- identificador del nodo
