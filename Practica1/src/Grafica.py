@@ -60,4 +60,14 @@ class Grafica:
         adyacencias_arbol -- Las aristas que forman el arbol sobre el que 
                               vamos a hacer el broadcast del mensaje.
         """
-        raise NotImplementedError('Broadcast de Grafica no implementado')
+        for i in range(0, len(self.adyacencias)):
+            self.nodos.append(NodoBroadcast(i, adyacencias_arbol[i], 
+                (canal.crea_canal_de_entrada(), canal)))
+
+        for nodo in self.nodos:
+            env.process(nodo.broadcast(env))
+
+        yield env.timeout(0)
+
+
+
