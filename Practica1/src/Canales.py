@@ -5,7 +5,7 @@ class Canal():
     """Clase Abstracta que modela el comportamiento que cualquier canal debe 
     tomar."""
 
-    def __init__(self, env: simpy.Environment, capacidad):
+    def __init__(self, env: simpy.Environment, capacidad=simpy.core.Infinity):
         """Constructor de la clase."""
         self.env = env
         self.capacidad = capacidad
@@ -34,4 +34,11 @@ class CanalGeneral(Canal):
 
     def envia(self, mensaje, vecinos):
         """Envia un mensaje a los canales de entrada de los vecinos."""
-        raise NotImplementedError('Envia de CanalGeneral no implementado')
+        if not self.canales:
+            raise RunTimeError('No hay canales.')
+        
+        eventos=[]
+        for j in vecinos:
+            eventos.append(self.canales[j].put(mensaje))
+
+        return self.env.all_of(eventos)

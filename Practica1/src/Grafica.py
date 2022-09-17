@@ -29,16 +29,30 @@ class Grafica:
     def get_nodos(self) -> list:
         return self.nodos
 
-    def conoce_vecinos(self, env: simpy.Environment, canal: simpy.Store) -> None:
+    def conoce_vecinos(self, env: simpy.Environment, canal: Canal) -> None:
         """Algoritmo para conocer a los vecinos de mis vecinos."""
-        raise NotImplementedError('Conoce_vecinos de Grafica no implementado')
+        for i in range(0, len(self.adyacencias)):
+            self.nodos.append(NodoVecinos(i, self.adyacencias[i], 
+                (canal.crea_canal_de_entrada(), canal)))
 
-    def genera_arbol_generador(self, env: simpy.Environment, canal: simpy.Store) \
+        for nodo in self.nodos:
+            env.process(nodo.conoce_vecinos(env))
+
+        yield env.timeout(0)
+
+    def genera_arbol_generador(self, env: simpy.Environment, canal: Canal) \
             -> None:
         """Algoritmo para generar el arbol generador."""
-        raise NotImplementedError('Get_arbol_generador de Grafica no implementado')
+        for i in range(len(self.adyacencias)):
+            self.nodos.append(NodoArbolGenerador(i, self.adyacencias[i], 
+                (canal.crea_canal_de_entrada(), canal)))
 
-    def broadcast(self, env: simpy.Environment, canal: simpy.Store,
+        for nodo in self.nodos:
+            env.process(nodo.genera_arbol(env))
+
+        yield env.timeout(0)
+
+    def broadcast(self, env: simpy.Environment, canal: Canal,
             adyacencias_arbol: list()) -> None:
         """Algoritmo de broadcast.
         
