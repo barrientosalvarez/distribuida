@@ -70,10 +70,14 @@ class NodoArbolGenerador(Nodo):
         self.madre=-1
         self.hijas=[]
         self.expected_msg=0
+        self.condition=True
 
     def genera_arbol(self, env: simpy.Environment):
         """Algoritmo para producir el arbol generador."""
-        if self.id_nodo==0:
+
+        #Tomaremos al nodo distinguido como el nodo con id=0
+        if self.id_nodo==0 and self.condition:
+            self.condition=False
             self.madre=0
             self.expected_msg=len(self.vecinos)
             self.canales[1].envia(("GO", self.id_nodo), self.vecinos)

@@ -43,7 +43,7 @@ class Grafica:
     def genera_arbol_generador(self, env: simpy.Environment, canal: Canal) \
             -> None:
         """Algoritmo para generar el arbol generador."""
-        for i in range(len(self.adyacencias)):
+        for i in range(0, len(self.adyacencias)):
             self.nodos.append(NodoArbolGenerador(i, self.adyacencias[i], 
                 (canal.crea_canal_de_entrada(), canal)))
 
