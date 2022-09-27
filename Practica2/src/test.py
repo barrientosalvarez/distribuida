@@ -42,6 +42,3 @@ class Test_Practica2:
 
 pruebas=Test_Practica2()
 pruebas.uno()
-
-pruebas = Test_Practica2()
-#pruebas.uno() 
