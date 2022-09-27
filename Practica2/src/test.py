@@ -40,5 +40,8 @@ class Test_Practica2:
                 (f'El nodo {nodo.id_nodo} tiene mal nivel.\n\
                     Nivel actual: {nodo.nivel}\nNivel esperado: {niveles_esperados[i]}')
 
+pruebas=Test_Practica2()
+pruebas.uno()
+
 pruebas = Test_Practica2()
 #pruebas.uno() 
