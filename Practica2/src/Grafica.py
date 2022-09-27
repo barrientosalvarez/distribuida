@@ -32,4 +32,22 @@ class Grafica:
 
     def bfs(self, env: simpy.Environment, canal: Canal) -> None:
         """Algoritmo de bfs."""
-        raise NotImplementedError('Bfs de Grafica no implementado')
+        for i in range(len(self.adyacencias)):
+            self.nodos.append(NodoBFS(i, self.adyacencias[i], 
+                (canal.crea_canal_de_entrada(), canal)))
+
+        for nodo in self.nodos:
+            env.process(nodo.bfs(env))
+
+        yield env.timeout(0)
+
+
+
+
+
+
+
+
+
+
+
