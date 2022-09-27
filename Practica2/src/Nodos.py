@@ -68,34 +68,32 @@ class NodoBFS(Nodo):
                     self.padre=msg[2]
                     self.nivel=msg[1]+1
                     self.msjs_esperados=len(self.vecinos)-1
-                    d=msg[1]+1
                     
                     if self.msjs_esperados==0:
-                        self.canales[1].envia(("BACK", "yes", d+1, self.id_nodo), [self.padre])
+                        self.canales[1].envia(("BACK", "yes", msg[1]+1, self.id_nodo), [self.padre])
 
                     else:
                         for vecino in self.vecinos:
                             if vecino==msg[2]:
                                 continue
-                            self.canales[1].envia(("GO", d+1, self.id_nodo), [vecino])
+                            self.canales[1].envia(("GO", msg[1]+1, self.id_nodo), [vecino])
 
-                elif self.nivel>d+1:
+                elif self.nivel>msg[1]+1:
                     self.padre=msg[2]
-                    self.level=msg[1]+1
-                    d=msg[1]+1
+                    self.nivel=msg[1]+1
                     self.msjs_esperados=len(self.vecinos)-1
 
                     if(self.msjs_esperados==0):
-                        self.canales[1].envia(("BACK", "yes", d, self.id_nodo), [self.padre])
+                        self.canales[1].envia(("BACK", "yes", msg[1], self.id_nodo), [self.padre])
 
                     else:
                         for vecino in self.vecinos:
                             if vecino==msg[2]:
                                 continue
-                            self.canales[1].envia(("GO", d+1, self.id_nodo), [vecino])
+                            self.canales[1].envia(("GO", msg[1]+1, self.id_nodo), [vecino])
                 
                 else:
-                    self.canales[1].envia(("BACK", "no", d+1, self.id_nodo), [msg[2]])
+                    self.canales[1].envia(("BACK", "no", msg[1]+1, self.id_nodo), [msg[2]])
             
             
             elif msg[0]=="BACK": 
@@ -103,13 +101,13 @@ class NodoBFS(Nodo):
 
                 if d==self.nivel+1:
                     if msg[1]=="yes":
-                        if msg[4] not in self.hijos:
-                            self.hijos.append(msg[4])
+                        if msg[3] not in self.hijos:
+                            self.hijos.append(msg[3])
                     
-                    self.msjs_esperados-=1
+                        self.msjs_esperados-=1
 
-                    if(self.msjs_esperados==0):
-                        if(self.padre!=self.id_nodo):
-                                self.canales[1].envia(("BACK", "yes", self.nivel, self.id_nodo), [self.padre])
+                        if(self.msjs_esperados==0):
+                            if(self.padre!=self.id_nodo):
+                                    self.canales[1].envia(("BACK", "yes", self.nivel, self.id_nodo), [self.padre])
 
 
