@@ -23,7 +23,7 @@ class Nodo:
     
     def get_id(self) -> int:
         """Regresa el identificador del nodo."""
-        returns self.id_nodo
+        return self.id_nodo
     
     def get_vecinos(self) -> list:
         """Regresa la lista de vecinos del nodo."""
@@ -48,7 +48,7 @@ class NodoBFS(Nodo):
     """
     def __init__(self, id_nodo: int, vecinos: list, canales: tuple):
         """Constructor para el nodo 'bfs'."""
-        Nodo.__init__(id_nodo, vecinos, canales)
+        Nodo.__init__(self, id_nodo, vecinos, canales)
         self.padre=-1
         self.nivel=-1
         self.hijos=[]
@@ -56,3 +56,60 @@ class NodoBFS(Nodo):
 
     def bfs(self, env: simpy.Environment):
         """Algoritmo de BFS."""
+        #tomaremos al nodo con id=0 como el proceso distinguido
+        if(self.id_nodo==0):
+            self.canales[1].envia(("GO", -1, self.id_nodo), [self.id_nodo])
+
+        while True:
+            msg=yield self.canales[0].get()
+
+            if msg[0]=="GO":
+                if self.padre==-1:
+                    self.padre=msg[2]
+                    self.nivel=msg[1]+1
+                    self.msjs_esperados=len(self.vecinos)-1
+                    d=msg[1]+1
+                    
+                    if self.msjs_esperados==0:
+                        self.canales[1].envia(("BACK", "yes", d+1, self.id_nodo), [self.padre])
+
+                    else:
+                        for vecino in self.vecinos:
+                            if vecino==msg[2]:
+                                continue
+                            self.canales[1].envia(("GO", d+1, self.id_nodo), [vecino])
+
+                elif self.nivel>d+1:
+                    self.padre=msg[2]
+                    self.level=msg[1]+1
+                    d=msg[1]+1
+                    self.msjs_esperados=len(self.vecinos)-1
+
+                    if(self.msjs_esperados==0):
+                        self.canales[1].envia(("BACK", "yes", d, self.id_nodo), [self.padre])
+
+                    else:
+                        for vecino in self.vecinos:
+                            if vecino==msg[2]:
+                                continue
+                            self.canales[1].envia(("GO", d+1, self.id_nodo), [vecino])
+                
+                else:
+                    self.canales[1].envia(("BACK", "no", d+1, self.id_nodo), [msg[2]])
+            
+            
+            elif msg[0]=="BACK": 
+                d=msg[2]
+
+                if d==self.nivel+1:
+                    if msg[1]=="yes":
+                        if msg[4] not in self.hijos:
+                            self.hijos.append(msg[4])
+                    
+                    self.msjs_esperados-=1
+
+                    if(self.msjs_esperados==0):
+                        if(self.padre!=self.id_nodo):
+                                self.canales[1].envia(("BACK", "yes", self.nivel, self.id_nodo), [self.padre])
+
+
