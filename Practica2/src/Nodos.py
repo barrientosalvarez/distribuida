@@ -5,6 +5,10 @@ import simpy
 class Nodo:
     """Representa un nodo basico.
 
+    Implementada por:
+    Barrientos Alvarez Jorge Miguel Aaron
+    Martinez Pardo Esau
+
     Atributos:
     id_nodo -- identificador del nodo
     vecinos -- lista con los ids de nuestros vecinos

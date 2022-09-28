@@ -5,6 +5,10 @@ import simpy
 class Grafica:
     """Representa una grafica.
 
+    Implementada por:
+    Barrientos Alvarez Jorge Miguel Aaron
+    Martinez Pardo Esau
+
     Atributos:
     nombre -- cadena que identifica a la grafica
     adyacencias -- lista de listas, adyacencias[i] representa las adyacencias

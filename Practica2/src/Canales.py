@@ -3,7 +3,12 @@ import simpy
 
 class Canal():
     """Clase Abstracta que modela el comportamiento que cualquier canal debe 
-    tomar."""
+    tomar.
+    
+    Implementada por:
+    Barrientos Alvarez Jorge Miguel Aaron
+    Martinez Pardo Esau
+    """
 
     def __init__(self, env: simpy.Environment, capacidad=simpy.core.Infinity):
         """Constructor de la clase."""
