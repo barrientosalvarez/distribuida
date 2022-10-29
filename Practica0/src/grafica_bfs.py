@@ -2,8 +2,7 @@ class Grafica:
     """
     Clase modificada por:
         Barrientos Alvarez Jorge Miguel Aaron
-        Martinez Pardo Esau
-
+    
     Clase que representa a una gráfica. Los id's de los nodos que
     pertenezcan a estas gráficas comenzarán desde 0.
     

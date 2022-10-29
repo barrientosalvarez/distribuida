@@ -6,7 +6,6 @@ class Canal():
     tomar.
     Hecho por:
     Barrientos Alvarez Jorge Miguel Aaron
-    Martinez Pardo Esau
     """
 
     def __init__(self, env: simpy.Environment, capacidad=simpy.core.Infinity):

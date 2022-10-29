@@ -6,7 +6,6 @@ class Grafica:
     """Representa una grafica.
     Hecho por:
     Barrientos Alvarez Jorge Miguel Aaron
-    Martinez Pardo Esau
 
     Atributos:
     nombre -- cadena que identifica a la grafica
